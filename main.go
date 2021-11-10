@@ -4,6 +4,7 @@ import "fmt"
 
 func main() {
 	fmt.Println("featureA")
+	fmt.Println("featureA1")
 	fmt.Println("a")
 	fmt.Println("a")
 	fmt.Println("a")
