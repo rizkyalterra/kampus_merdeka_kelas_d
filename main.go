@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("stash")
+	fmt.Println("featureA")
 	fmt.Println("a")
 	fmt.Println("a")
 	fmt.Println("a")
