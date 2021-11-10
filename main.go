@@ -4,6 +4,10 @@ import "fmt"
 
 func main() {
 	fmt.Println("stash")
+	fmt.Println("a")
+	fmt.Println("a")
+	fmt.Println("a")
+	fmt.Println("a")
 
 	// interface
 	var userInterface UserInterface
