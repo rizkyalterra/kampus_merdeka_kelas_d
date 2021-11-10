@@ -3,16 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	data = "katak"
-	for index, value := range data {
-		if string(value) = "k" {
-			
-		}
-	}
+	fmt.Println("stash")
 
 	// interface
 	var userInterface UserInterface
-	
+
 	user := User{"Alterra", 12}
 	user.tambahUmur()
 
