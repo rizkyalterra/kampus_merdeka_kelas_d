@@ -10,6 +10,8 @@ func main() {
 	fmt.Println("a")
 	fmt.Println("a")
 
+	fmt.Println("fixing bug")
+
 	// interface
 	var userInterface UserInterface
 
