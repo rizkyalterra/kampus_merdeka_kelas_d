@@ -1,6 +1,8 @@
 package users
 
 import (
+	"kelasd/configs"
+	"kelasd/middlewares"
 	"kelasd/models/response"
 	"kelasd/models/users"
 	"net/http"
@@ -15,6 +17,14 @@ func LoginController(c echo.Context) error {
 	var user users.User
 	c.Bind(&user)
 
+	if err := configs.DB.Where("email = ? AND password = ?", user.Email, user.Password).First(&user).Error; err != nil {
+		return c.JSON(http.StatusBadRequest, response.BaseResponse{
+			http.StatusBadRequest,
+			"Email dan Password tidak sesuai",
+			nil,
+		})
+	}
+
 	if user.Password == "" {
 		return c.JSON(http.StatusBadRequest, response.BaseResponse{
 			http.StatusBadRequest,
@@ -23,12 +33,23 @@ func LoginController(c echo.Context) error {
 		})
 	}
 
-	// login ke db
+	// generate token
+	token, err := middlewares.GenereteTokenJWT(int(user.Id))
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
+			http.StatusInternalServerError,
+			"Error ketika generate token JWT",
+			nil,
+		})
+	}
 
 	return c.JSON(http.StatusOK, response.BaseResponse{
 		http.StatusOK,
 		"succes",
-		user,
+		map[string]string{
+			"token": token,
+		},
 	})
 
 }
