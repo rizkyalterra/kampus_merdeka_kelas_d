@@ -5,6 +5,9 @@ import (
 	userUsecase "keld/business/users"
 	userController "keld/controllers/users"
 	userRepo "keld/drivers/databases/users"
+
+	_middleware "keld/app/middleware"
+
 	"keld/drivers/mysql"
 	"log"
 	"time"
@@ -43,15 +46,22 @@ func main() {
 	db := configDb.InitialDb()
 	dbMigrate(db)
 
+	jwt := _middleware.ConfigJWT{
+		SecretJWT:       viper.GetString(`jwt.secret`),
+		ExpiresDuration: viper.GetInt(`jwt.expired`),
+	}
+
 	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
 
 	e := echo.New()
+
 	userRepoInterface := userRepo.NewUserRepository(db)
 	userUseCaseInterface := userUsecase.NewUsecase(userRepoInterface, timeoutContext)
 	userControllerInterface := userController.NewUserController(userUseCaseInterface)
 
 	routesInit := routes.RouteControllerList{
 		UserController: *userControllerInterface,
+		JWTConfig:      jwt.Init(),
 	}
 
 	routesInit.RouteRegister(e)

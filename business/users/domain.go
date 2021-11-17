@@ -25,5 +25,5 @@ type UserUsecaseInterface interface {
 
 type UserRepoInterface interface {
 	Login(domain Domain, ctx context.Context) (Domain, error)
-	GetAllUsers(ctx context.Context) ([]Domain, error)
+	// GetAllUsers(ctx context.Context) ([]Domain, error)
 }
