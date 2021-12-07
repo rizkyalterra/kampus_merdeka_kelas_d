@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"keld/app/routes"
 	userUsecase "keld/business/users"
 	userController "keld/controllers/users"
@@ -17,6 +18,10 @@ import (
 	"gorm.io/gorm"
 )
 
+/*
+	fungsi bla
+	param 1 : unt
+*/
 func init() {
 	viper.SetConfigFile("app/config/config.json")
 	err := viper.ReadInConfig()
@@ -46,11 +51,13 @@ func main() {
 	db := configDb.InitialDb()
 	dbMigrate(db)
 
+	// Membuat JWT config
 	jwt := _middleware.ConfigJWT{
 		SecretJWT:       viper.GetString(`jwt.secret`),
 		ExpiresDuration: viper.GetInt(`jwt.expired`),
 	}
 
+	fmt.Println()
 	timeoutContext := time.Duration(viper.GetInt("context.timeout")) * time.Second
 
 	e := echo.New()

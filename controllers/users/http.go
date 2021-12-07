@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"keld/app/middleware"
 	"keld/business/users"
 	"keld/controllers"
 	"keld/controllers/users/request"
@@ -24,6 +25,9 @@ func (controller *UserController) Login(c echo.Context) error {
 	ctx := c.Request().Context()
 	var userLogin request.UserLogin
 	err := c.Bind(&userLogin)
+
+	_ = middleware.GetUserId(c)
+
 	if err != nil {
 		return controllers.ErrorResponse(c, http.StatusInternalServerError, "error binding", err)
 	}

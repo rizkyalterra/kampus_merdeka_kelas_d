@@ -16,5 +16,10 @@ func (controller RouteControllerList) RouteRegister(c *echo.Echo) {
 	users := c.Group("/user")
 	// users.Use(middleware.JWTWithConfig(controller.JWTConfig))
 	users.POST("/login", controller.UserController.Login)
+	users.PUT("/:userId", controller.UserController.Login)
+	users.POST("/login", controller.UserController.Login)
+
+	users.POST("/cart/", controller.UserController.Login)
+
 	// users.GET("/", controller.UserController.Login, middleware.JWTWithConfig(controller.JWTConfig))
 }

@@ -44,3 +44,10 @@ func (configJwt ConfigJWT) GenererateToken(userId uint) string {
 
 	return token
 }
+
+// GetUser from jwt ...
+func GetUserId(c echo.Context) int {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*JwtCustomClaims)
+	return int(claims.UserId)
+}
